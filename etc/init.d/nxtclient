@@ -3,8 +3,9 @@
 # NXT-Client configuration
 source "/etc/nxt/nxt.conf"
 
-if [[ -z "$pidfile" ]] || [[ -z "$nxtuser" ]] || [[ -z "$javapath" ]]
-   [[ -z "$stdaemon" ]] || [[ -z "$client_args" ]]; then
+if [[ -z "$pidfile" ]] || [[ -z "$nxtuser" ]] || [[ -z "$javapath" ]] 
+   [[ -z "$stdaemon" ]] || [[ -z "$client_args" ]] || [[ -z "$nicelevel" ]]
+   [[ -z "$memlow" ]] || [[ -z "$memhigh" ]]; then
 
     echo "Missing configuration in nxt.conf.";
     exit 0
@@ -14,7 +15,7 @@ function start {
 
     # Make sure that pidfile exists and is owned by nxtuser
     touch $pidfile && chown $nxtuser:$nxtuser $pidfile
-    $stdaemon --start --chdir "$nxtroot" --background --chuid "$nxtuser" \
+    $stdaemon --start --chdir "$nxtroot" --background --chuid "$nxtuser" --nicelevel $nicelevel \
     --quiet --pidfile "$pidfile" --make-pidfile --exec "$javapath" -- $client_args 2>&1
     # Fix "waitpid". Currently waitpid can not monitor non child processes
     sleep 4
