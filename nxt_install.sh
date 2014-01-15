@@ -2,6 +2,19 @@
 
 # Post install script for nxt-client
 
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:";
+
+wget_bin=$(which wget);
+unzip_bin=$(which unzip);
+gpg_bin=$(which gpg);
+shasum_bin=$(which sha256sum);
+
+if [[ -z "$wget_bin" ]] || [[ -z "$unzip_bin" ]] || [[ -z "$gpg_bin" ]] || [[ -z "$shasum_bin" ]]; then
+    echo "Unsatisfied binary dependencies. This script uses the following binarys: wget, unzip, gpg, sha256sum.";
+    echo "These applications must be installed in order to run this script.";
+    exit 1;
+fi
+
 function install {
 
 
@@ -9,11 +22,11 @@ function install {
     
         echo -n "Creating nxt client root directory.. ";
         mkdir -p /usr/local/bin/nxt/ && echo "done." || { echo "Could not create nxt client root directory." ; exit 1;}
+    fi
 
-        if [[ -n "$1" ]] && [[ "$1" != "update" ]] && [[ "$(ls /usr/local/bin/nxt/ |wc -l)" -gt 0 ]]; then
-            echo "nxt client root directory contain files. If you want to overwrite this, issue an update.";
-            exit 0;
-        fi
+    if [[ "$1" != "update" ]] && [[ "$(ls /usr/local/bin/nxt/ |wc -l)" -gt 0 ]]; then
+        echo "nxt client root directory contain files. If you want to overwrite this, issue an update.";
+        exit 0;
     fi
 
 
@@ -21,6 +34,7 @@ function install {
 
         echo -n "Creating configuration directory for nxt client.. ";
         mkdir -p /etc/nxt && echo "done." || { echo "Could not create nxt client configuration directory." ; exit 1;}
+        cp nxt.conf /etc/nxt/
     fi
 
 
