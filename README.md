@@ -1,12 +1,12 @@
 nxt
 ===
 
-#  ----------------------------------------------------------------------------
-#  "THE NXT-WARE LICENSE" NXT: 13570469120032392161 (Revision: 25519)
-#  j0b <gemeni@gmail.com> wrote this file. As long as you retain this notice you
-#  can do whatever you want with this stuff. IF you think this stuff is worth it, 
-#  you can send me NXT, my public key is above.
-#  ----------------------------------------------------------------------------
+  ----------------------------------------------------------------------------
+  "THE NXT-WARE LICENSE" NXT: 13570469120032392161 (Revision: 25519)
+  j0b <gemeni@gmail.com> wrote this file. As long as you retain this notice you
+  can do whatever you want with this stuff. IF you think this stuff is worth it, 
+  you can send me NXT, my public key is above.
+  ----------------------------------------------------------------------------
 
 
 
