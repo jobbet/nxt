@@ -1,16 +1,38 @@
 nxt
 ===
 
+#  ----------------------------------------------------------------------------
+#  "THE NXT-WARE LICENSE" NXT: 13570469120032392161 (Revision: 25519)
+#  j0b <gemeni@gmail.com> wrote this file. As long as you retain this notice you
+#  can do whatever you want with this stuff. IF you think this stuff is worth it, 
+#  you can send me NXT, my public key is above.
+#  ----------------------------------------------------------------------------
+
+
+
 Simple install and update script for NXT-Client on GNU/Linux (Debian and Ubuntu).
 
-git clone https://github.com/jobbet && cd jobbet/nxt/ && ./nxt_install install
-                                                         ./nxt_install update
+INSTALL
 
-You can also specify desired version, e.g. ./nxt_install install 0.5.7
-                                           ./nxt_install update 0.5.7
-If you do not specify any version, it will install or update to the latest version.
+1. git clone https://github.com/jobbet && cd jobbet/nxt
 
-Thats it.
+2. ./nxt_install install (this will install the latest version of NXT-Client
+   If you want a different version, specify that as second argument, e.g.
+   ./nxt_install install 0.5.7
+   The client is downloaded from the public source for nxt-client software.
+   During install the client software validates against known sha256sum hash.
+
+3. Installation done
+
+UPDATE
+
+1. cd jobbet/nxt && ./nxt_install update (this will update to the latest client version)
+   For a different version, ./nxt_install update 0.5.7
+
+   Be sure to stop you client before updating. If you already have an installation of this software,
+   the script will issue an /etc/init.d/nxtclient stop. So you do not have to think about in that case.
+
+
 
 j0b
 
