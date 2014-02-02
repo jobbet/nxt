@@ -32,7 +32,10 @@ UPDATE
    Be sure to stop you client before updating. If you already have an installation of this software,
    the script will issue an /etc/init.d/nxtclient stop. So you do not have to think about in that case.
 
+CONFIGURATION
 
+   The nxt client java process can be configured with several parameters. This is done in /etc/nxt/nxt.conf
+   Issue an /etc/init.d/nxtclient restart after changes is made.
 
 j0b
 

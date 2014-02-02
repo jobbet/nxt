@@ -72,7 +72,7 @@ case "$1" in
     *)
 
     N=/etc/init.d/${0##*/}
-    echo "Usage: $N {start|stop|status}" >&2
+    echo "Usage: $N {start|stop|restart|status}" >&2
     exit 1
     ;;
 esac
