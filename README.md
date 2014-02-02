@@ -14,9 +14,9 @@ Simple install and update script for NXT-Client on GNU/Linux (Debian and Ubuntu)
 
 INSTALL
 
-1. git clone https://github.com/jobbet && cd jobbet/nxt
+1. git clone https://github.com/jobbet/nxt
 
-2. ./nxt_install install (this will install the latest version of NXT-Client
+2. cd nxt/ && ./nxt_install install (this will install the latest version of NXT-Client
    If you want a different version, specify that as second argument, e.g.
    ./nxt_install install 0.5.7
 
@@ -29,7 +29,7 @@ INSTALL
 
 UPDATE
 
-1. cd jobbet/nxt && ./nxt_install update (this will update to the latest client version)
+1. cd nxt/ && ./nxt_install update (this will update to the latest client version)
    For a different version, ./nxt_install update 0.5.7
 
    If package dependencies are missing you will be asked if you want to install these,

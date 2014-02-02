@@ -10,14 +10,15 @@
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:";
 
-java_bin=$(which java);
-wget_bin=$(which wget);
-unzip_bin=$(which unzip);
-gpg_bin=$(which gpg);
-shasum_bin=$(which sha256sum);
-
 
 function install_deps {
+
+    java_bin=$(which java);
+    wget_bin=$(which wget);
+    unzip_bin=$(which unzip);
+    gpg_bin=$(which gpg);
+    shasum_bin=$(which sha256sum);
+
 
     if [[ -z "$java_bin" ]] || [[ -z "$wget_bin" ]] || [[ -z "$unzip_bin" ]] ||
         [[ -z "$gpg_bin" ]] || [[ -z "$shasum_bin" ]]; then
@@ -52,6 +53,14 @@ function install_deps {
 
 
 function install {
+
+    # Existence of these binarys have already been verified by install_deps function
+
+    java_bin=$(which java);
+    wget_bin=$(which wget);
+    unzip_bin=$(which unzip);
+    gpg_bin=$(which gpg);
+    shasum_bin=$(which sha256sum);
 
 
     if [[ ! -d "/usr/local/bin/nxt/" ]]; then
