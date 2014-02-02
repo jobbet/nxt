@@ -19,15 +19,21 @@ INSTALL
 2. ./nxt_install install (this will install the latest version of NXT-Client
    If you want a different version, specify that as second argument, e.g.
    ./nxt_install install 0.5.7
+
+   If package dependencies are missing you will be asked if you want to install these,
+   or do it manually.
+
    The client is downloaded from the public source for nxt-client software.
    During install the client software validates against known sha256sum hash.
 
-3. Installation done
 
 UPDATE
 
 1. cd jobbet/nxt && ./nxt_install update (this will update to the latest client version)
    For a different version, ./nxt_install update 0.5.7
+
+   If package dependencies are missing you will be asked if you want to install these,
+   or do it manually.
 
    Be sure to stop you client before updating. If you already have an installation of this software,
    the script will issue an /etc/init.d/nxtclient stop. So you do not have to think about in that case.
