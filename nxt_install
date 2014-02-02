@@ -39,7 +39,7 @@ function install {
     if [[ ! -d "/etc/nxt/" ]]; then
 
         echo -n "Creating configuration directory for nxt client.. ";
-       mkdir -p /etc/nxt && echo "done." || { echo "Could not create nxt client configuration directory." ; exit 1;}
+        mkdir -p /etc/nxt && echo "done." || { echo "Could not create nxt client configuration directory." ; exit 1;}
         cp nxt.conf /etc/nxt/
     fi
 
@@ -54,7 +54,7 @@ function install {
 
     if [[ -z "$2" ]]; then
         client_version=$($wget_bin -q -O -  http://download.nxtcrypto.org | sed 's/\(>\|<\)/ /g' |awk {'print $3 '} | 
-                         egrep -v "(*e.zip*|changelog)" |egrep '(zip$)' |tail -n 1);
+                         egrep -v "(e.zip|changelog)" |egrep '(zip$)' |tail -n 1);
     else
         client_version=$2;
     fi
@@ -87,10 +87,12 @@ function install {
     if [[ -n "$sha" ]]; then
         echo -n "Verifying $shasum_bin for $client_version..";
         zip_sha=$($shasum_bin /tmp/$client_version |awk {'print $1'});
+
         if [[ "$sha" == "$zip_sha" ]]; then
             echo "done."
             $unzip_bin -oq /tmp/$client_version -d /usr/local/bin/ && chown -R nxt:nxt /usr/local/bin/nxt/ > /dev/null 2>&1 ||
             { echo "Could not extract files into nxt client root directory."; exit 1; }
+
         else
             echo "CRITICAL: The shasum does not match!. Installation will not continue.";
             exit 1;
@@ -112,6 +114,7 @@ function update {
             exit 1;
 
         else
+
             if [[ -f "/etc/init.d/nxtclient" ]] && [[ "$(/etc/init.d/nxtclient status |grep 'started' |wc -l)" -gt 0 ]]; then
                 /etc/init.d/nxtclient stop
             fi
