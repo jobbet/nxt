@@ -11,29 +11,47 @@
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:";
 
 
-function install_deps {
-
-    java_bin=$(which java);
-    wget_bin=$(which wget);
-    unzip_bin=$(which unzip);
-    gpg_bin=$(which gpg);
-    shasum_bin=$(which sha256sum);
-
+function setbin_paths {
+    
+    export java_bin=$(which java);
+    export wget_bin=$(which wget);
+    export unzip_bin=$(which unzip);
+    export gpg_bin=$(which gpg);
+    export shasum_bin=$(which sha256sum);
 
     if [[ -z "$java_bin" ]] || [[ -z "$wget_bin" ]] || [[ -z "$unzip_bin" ]] ||
-        [[ -z "$gpg_bin" ]] || [[ -z "$shasum_bin" ]]; then
+       [[ -z "$gpg_bin" ]] || [[ -z "$shasum_bin" ]]; then
+
+        return 1;
+    else
+
+        return 0;
+    fi
+
+}
+   
+
+function install_deps {
+
+
+    if ! setbin_paths; then
 
         read -n1 -p "Missing package dependencies, would you like this script to try and install these packages? (y/n): " yesorno
 
         case "$yesorno" in
             y) 
-                echo "";
                 apt-get -qq -y update >/dev/null 2>&1 || 
-                { "Error when updating apt package database. Please run apt-get update manually and rerun this script." ; exit 1; }
+                { echo "Error when updating apt package database. Please run apt-get update manually and rerun this script." ; exit 1; }
                 apt-get -qq -y install openjdk-7-jre wget unzip gnupg coreutils >/dev/null 2>&1 ||
                 { echo "Could not install package dependencies, please install these manually and rerun installation script." ; exit 1; }
 
-                return 0;
+                if ! setbin_paths; then
+                    echo "Could not install package dependencies, these may not exist in apt repos (sources.list)."; 
+                    exit 1;
+                else
+                    echo "Successfully installed package dependencies.";
+                    return 0;
+                fi
             ;;
 
             n)
@@ -54,14 +72,12 @@ function install_deps {
 
 function install {
 
-    # Existence of these binarys have already been verified by install_deps function
+    if ! setbin_paths; then
 
-    java_bin=$(which java);
-    wget_bin=$(which wget);
-    unzip_bin=$(which unzip);
-    gpg_bin=$(which gpg);
-    shasum_bin=$(which sha256sum);
-
+        echo "Missing package dependencies. We have already validated the existense of this packages, but we failed anyway.";
+        exit 1;
+    fi        
+        
 
     if [[ ! -d "/usr/local/bin/nxt/" ]]; then
 
