@@ -13,11 +13,35 @@ source "/etc/nxt/nxt.conf"
 
 if [[ -z "$pidfile" ]] || [[ -z "$nxtuser" ]] || [[ -z "$javapath" ]] 
    [[ -z "$stdaemon" ]] || [[ -z "$client_args" ]] || [[ -z "$nicelevel" ]]
-   [[ -z "$memlow" ]] || [[ -z "$memhigh" ]]; then
+   [[ -z "$memlow" ]] || [[ -z "$memhigh" ]] || [[ -z "$nxt_int" ]] || [[ -z "$brate" ]] ||
+   [[ -z "$crate" ]] || [[ -z "$limit_port" ]]; then
 
     echo "Missing configuration in nxt.conf.";
     exit 0
 fi
+
+function traflimit {
+
+    echo "Setting up bandwidth rate limiting...";
+
+    tc qdisc add dev $nxt_int root handle 1:0 htb default 10 >/dev/null 2>&1 ||
+        { echo -n "Traffic limitation can not be enabled, continues without it." ; return 1; }
+
+    tc class add dev $nxt_int parent 1:0 classid 1:10 htb rate $brate ceil $crate prio 0 >/dev/null 2>&1 ||
+        { echo -n "Failed to set bandwidth rates: $brate, $crate." ; return 1; }
+
+    iptables -A OUTPUT -t mangle -p tcp --sport $limit_port -j MARK --set-mark 10 >/dev/null 2>&1 ||
+        { echo -n "Failed to add IPTables mangle/package-tagging rule." ; return 1; }
+
+    tc filter add dev $nxt_int parent 1:0 prio 0 protocol ip handle 10 fw flowid 1:10 >/dev/null 2>&1 ||
+        { echo -n "Failed to assing traffic limitation rules to appropriate qdisc" ; return 1; }
+    
+    return 0;
+
+}
+
+
+
 
 function start {
 
@@ -33,6 +57,12 @@ function start {
 
     # Show user that the client is actually started
     status
+
+    if [[ "$bwlimit" == "on" ]]; then
+        if traflimit; then
+            echo -n "done.";
+        fi
+    fi
 
 }
 
