@@ -63,12 +63,11 @@ function start {
         sleep 1;
     done
 
-    # Show user that the client is actually started
-    status
-
     if [[ "$bwlimit" == "on" ]]; then
         traflimit
     fi
+
+    status
 
 }
 
