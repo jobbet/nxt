@@ -96,7 +96,12 @@ function install {
 
         echo -n "Creating configuration directory for nxt client.. ";
         mkdir -p /etc/nxt && echo "done." || { echo "Could not create nxt client configuration directory." ; exit 1;}
-        cp nxt.conf /etc/nxt/
+    fi
+
+
+    if [[ -d "/etc/nxt/" ]] && [[ -f "nxt.conf" ]]; then
+
+        cp nxt.conf /etc/nxt/ || { echo "Could not copy nxt.conf to nxt configuration directory" ; exit 1;}
     fi
 
 
