@@ -125,7 +125,7 @@ function install {
     echo "done.";
 
     client_sign=$($wget_bin -q -O -  http://download.nxtcrypto.org | sed 's/\(>\|<\)/ /g' |awk {'print $3 '} | 
-                  egrep $client_version |grep "sha256" |grep "asc")
+    grep "sha256" |grep "asc" |grep $(echo $client_version | sed 's/.zip//g'))
 
     if [[ -n "$client_sign" ]]; then
 
@@ -137,7 +137,7 @@ function install {
     fi
 
     $gpg_bin --recv-keys 0xFF2A19FA > /dev/null 2>&1 || { echo "Could not recieve public key for file verification. Exiting."; exit 1; }
-    $gpg_bin --verify /tmp/$client_sign > /dev/null 2>&1 || { echo "CRITICAL: Failed to verify the file containing $shasum_bin for nxt client."; exit 1; }
+    $gpg_bin --verify /tmp/$client_sign > /dev/null 2>&1 || { echo "CRITICAL: Failed to verify the file containing sha256sum for nxt client."; exit 1; }
     cp nxtclient /etc/init.d/ > /dev/null 2>&1 || { echo "Could not copy nxt client init script into /etc/init.d/."; exit 1; }
 
     sha=$(grep "$client_version" /tmp/$client_sign | awk {'print $1'});
