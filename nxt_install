@@ -116,7 +116,7 @@ function install {
     if [[ -z "$2" ]]; then
 
         client_version=$($wget_bin -q -O -  http://download.nxtcrypto.org | sed 's/\(>\|<\)/ /g' |awk {'print $3 '} | 
-                         egrep -v "(e.zip|changelog)" |egrep '(zip$)' |sort -V | tail -n 1);
+                         egrep -v "(e.zip|changelog)" |egrep '(zip$)' |sort -n -k1.17n | tail -n 1);
     else
 
         client_version=$2;
