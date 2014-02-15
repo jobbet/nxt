@@ -24,6 +24,8 @@ function disable_traflimit {
 
     iprule_exist=$(/sbin/iptables -L OUTPUT -t mangle |grep 'tcp spt:7874 MARK set' |wc -l);
 
+    echo -n "Removing bandwidht limitation rules...";
+
     if [[ $iprule_exist -ge 1 ]]; then
 
         /sbin/iptables -D OUTPUT -t mangle -p tcp --sport $limit_port -j MARK --set-mark 10 > /dev/null 2>&1 ||
@@ -73,14 +75,15 @@ function start {
 
     if [[ "$bwlimit" == "on" ]]; then
 
-        echo -n "Cleaning up old bandwidht limitation rules...";
         if disable_traflimit; then
 
             echo "done.";
         fi
 
         echo -n "Configuring bandwidht limitation...";
+
         if traflimit; then
+
             echo "done.";
         fi
 
@@ -109,7 +112,6 @@ function stop {
 
     if [[ "$bwlimit" != "on" ]]; then
 
-        echo -n "Removing bandwidht limitation rules...";
 
         if disable_traflimit; then
 

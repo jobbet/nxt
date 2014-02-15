@@ -155,6 +155,15 @@ function install {
         if [[ "$sha" == "$zip_sha" ]]; then
 
             echo "done."
+
+            if [[ -f /usr/local/bin/nxt/webapps/root/WEB-INF/web.xml ]]; then
+
+                echo -n "Backing up the current version of web.xml (web.xml-$(date +%F))...";
+                cp /usr/local/bin/nxt/webapps/root/WEB-INF/web.xml /usr/local/bin/nxt/webapps/root/WEB-INF/web.xml-$(date +%F) || 
+                   { echo "Could not backup web.xml."; exit 1; }
+                echo "done.";
+            fi
+
             $unzip_bin -oq /tmp/$client_version -d /usr/local/bin/ && chown -R nxt:nxt /usr/local/bin/nxt/ > /dev/null 2>&1 ||
             { echo "Could not extract files into nxt client root directory."; exit 1; }
 
