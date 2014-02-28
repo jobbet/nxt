@@ -9,7 +9,7 @@
 
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:";
-
+export nxtroot="/usr/local/bin/nxt";
 
 function setbin_paths {
     
@@ -79,13 +79,13 @@ function install {
     fi        
         
 
-    if [[ ! -d "/usr/local/bin/nxt/" ]]; then
+    if [[ ! -d "$nxtroot" ]]; then
 
         echo -n "Creating nxt client root directory.. ";
-        mkdir -p /usr/local/bin/nxt/ && echo "done." || { echo "Could not create nxt client root directory." ; exit 1;}
+        mkdir -p $nxtroot && echo "done." || { echo "Could not create nxt client root directory." ; exit 1;}
     fi
 
-    if [[ "$1" != "update" ]] && [[ "$(ls /usr/local/bin/nxt/ |wc -l)" -gt 0 ]]; then
+    if [[ "$1" != "update" ]] && [[ "$(ls $nxtroot |wc -l)" -gt 0 ]]; then
 
         echo "nxt client root directory contain files. If you want to overwrite this, issue an update.";
         exit 0;
@@ -116,7 +116,7 @@ function install {
     if [[ -z "$2" ]]; then
 
         client_version=$($wget_bin -q -O -  http://download.nxtcrypto.org | sed 's/\(>\|<\)/ /g' |awk {'print $3 '} | 
-                         egrep -v "(e.zip|changelog)" |egrep '(zip$)' |sort -n -k1.17n | tail -n 1);
+                         egrep -v "(e.zip|changelog)" |egrep '(zip$)' |sort -V | tail -n 1);
     else
 
         client_version=$2;
@@ -132,6 +132,7 @@ function install {
     client_sign=$($wget_bin -q -O -  http://download.nxtcrypto.org | sed 's/\(>\|<\)/ /g' |awk {'print $3 '} | 
     grep "sha256" |grep "asc" |grep $(echo $client_version | sed 's/.zip//g'))
 
+
     if [[ -n "$client_sign" ]]; then
 
         echo -n "Downloading $client_version shasum signature..";
@@ -141,8 +142,11 @@ function install {
         echo "done.";
     fi
 
+
     $gpg_bin --recv-keys 0xFF2A19FA > /dev/null 2>&1 || { echo "Could not recieve public key for file verification. Exiting."; exit 1; }
+    
     $gpg_bin --verify /tmp/$client_sign > /dev/null 2>&1 || { echo "CRITICAL: Failed to verify the file containing sha256sum for nxt client."; exit 1; }
+    
     cp nxtclient /etc/init.d/ > /dev/null 2>&1 || { echo "Could not copy nxt client init script into /etc/init.d/."; exit 1; }
 
     sha=$(grep "$client_version" /tmp/$client_sign | awk {'print $1'});
@@ -156,15 +160,15 @@ function install {
 
             echo "done."
 
-            if [[ -f /usr/local/bin/nxt/webapps/root/WEB-INF/web.xml ]]; then
+            if [[ -f "$nxtroot/webapps/root/WEB-INF/web.xml" ]]; then
 
                 echo -n "Backing up the current version of web.xml (web.xml-$(date +%F))...";
-                cp /usr/local/bin/nxt/webapps/root/WEB-INF/web.xml /usr/local/bin/nxt/webapps/root/WEB-INF/web.xml-$(date +%F) || 
+                cp $nxtroot/webapps/root/WEB-INF/web.xml $nxtroot/webapps/root/WEB-INF/web.xml-$(date +%F) || 
                    { echo "Could not backup web.xml."; exit 1; }
                 echo "done.";
             fi
 
-            $unzip_bin -oq /tmp/$client_version -d /usr/local/bin/ && chown -R nxt:nxt /usr/local/bin/nxt/ > /dev/null 2>&1 ||
+            $unzip_bin -oq /tmp/$client_version -d /usr/local/bin/ && chown -R nxt:nxt $nxtroot > /dev/null 2>&1 ||
             { echo "Could not extract files into nxt client root directory."; exit 1; }
 
         else
@@ -182,8 +186,8 @@ function update {
     if [[ -n "$1" ]]; then
 
         asked_version=$1;
-        client_version=$($wget_bin -q -O -  http://download.nxtcrypto.org | sed 's/\(>\|<\)/ /g' |awk {'print $3 '} |
-                       egrep -v "(*e.zip*|changelog)" |egrep '(zip$)' |grep "$asked_version");
+        client_version=$($wget_bin -q -O - http://download.nxtcrypto.org |sed 's/\(>\|<\)/ /g' |
+                         sed 's/"/ /g' |awk {'print $3'} |egrep '.zip$' |grep "$asked_version");
 
         if [[ -z "$client_version" ]]; then
 

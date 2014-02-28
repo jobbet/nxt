@@ -125,19 +125,11 @@ function stop {
 
 function status {
 
-    # We should use $stdaemon -T for process status,
-    # but -T seems to not exist for older versions.
-    # This is a ugly way of doing it..
-
-    if [[ $(ps ax |grep 'nxt/start.jar' |wc -l) -ge 2 ]];  then 
+    if $stdaemon -T --pidfile $pidfile; then
         echo "NXT-Client is started.";
     else
-        echo "NXT-Client is stopped."; 
-        return 1;
+        echo "NXT-Client is stopped.";
     fi
-
-    return 0;
-
 
 }
    
