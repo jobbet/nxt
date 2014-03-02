@@ -1,0 +1,47 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Release 0.8.3
+
+http://download.nxtcrypto.org/nxt-client-0.8.3.zip
+
+sha256: 9a59c60336e01e87a3a1484697dd35a57d8782747145f8049496e19cbffdd537
+
+
+Change log:
+
+Fixed UI problems with display and updates of My Transactions.
+Consistent counting of transaction confirmations. Transactions included
+in the last block are considered having 0 confirmations.
+
+When a block is pushed, the BLOCK_PUSHED event is now emitted before
+the REMOVED_UNCONFIRMED_TRANSACTIONS and ADDED_CONFIRMED_TRANSACTIONS
+events.
+
+Added BlockchainProcessor.RESCAN_BEGIN and RESCAN_END events, triggered
+before and after a re-scan (not the regular start-up scan).
+
+Fixed a few null pointers caused by bad peer data.
+
+Improved handling of peer addresses and hallmarks.
+
+Added blacklisted status to peer info.
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJTDkldAAoJEFOhyXc7+e2Ag+AP/2Loj424Fy7FWFC3Nr8xD9Y2
+RaMaG8qSX6sKnSmvzp6ogLQF9RwNRdR+7ebhUjOB4NaObT2VcVFP6GUHpzXEQH+J
+v44pV/odFTzlnRCgGWREzteUmjG01xyoSpp7CEaqd8ZSnvFuLg0MCq2viHhCIg0M
+/tEYLK7RmrcGMrsPOUutg3xME1ERoRC1YjuMPCCJSSP9JHm2L7D2S4LxvH+xQT8x
+OwPoKXmgsMn8nXsudMRWMyVAwzpYT4AkgUqXYzsLBMeVKcLePfbwgqzMT6Z9IKUR
+MTStGn3dXYsm7+2n2zP+oDy1ob3FKGlnMmqa/BaHZySpwTLD0kebPLRVjkgoj3eD
+2apwugeeP84eLVKy7o1LApRXrVSYdw3MW/ZIDe2H/8LF3HaHuINNXSAgX3aslvyR
+kJxkcRyAFl9C7nT0mSH2vUAHk3n3hA/1meuJ4rCOw03JxI3wMjJGjR4sHtWO4ik3
+r7I4UywzG89ABXZOAM9Q7ItO3NL5HdrcGfsDSc0hVZehqKYDHOZSdrPpb03rJont
+NOYxo4oEsf8DGOLFiLtYGN9zCtWkjsVl3fKMvVmRIqutz/VqSXL2kQIdVR6oUI9k
+QMBXMUfzXAiEcOdYPx0VjqaJmbitLVF0qXL+TByTkROzP7TRYqJHWdCzqiAA3Jr3
+9UpvYGW111MyHY53Hcyf
+=7618
+-----END PGP SIGNATURE-----
