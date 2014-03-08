@@ -1,0 +1,48 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Release 0.8.8
+
+http://download.nxtcrypto.org/nxt-client-0.8.8.zip
+
+sha256: 837973d4313b6d3e835ff46c41870ca5ced367b8dc8a160a912d8124f1721b5e
+
+
+Release 0.7.7
+
+http://download.nxtcrypto.org/nxt-client-0.7.7.zip
+
+sha256: 7a8b4430a78b044871ab676caad8eb36384135d6dc694c0a4ca24c51805fdc24
+
+
+Change log:
+
+Fixed incorrect setting of genesis block timestamp when
+local time is in the daylight savings period. This must
+have been the reason for users in the southern hemisphere
+being unable to forge.
+
+Since DST in the US starts March 09, it is critical that
+at least those in the US upgrade to 0.8.8 or 0.7.7.
+
+There are no new bugfixes or features in 0.7.7 relative to
+0.7.6 other than this daylight savings time fix.
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBAgAGBQJTGZm8AAoJEFOhyXc7+e2AC28P/iviF4g2sV8YN/e2a5bKwfKR
+JY8Fe1qMLQEGaNJKVoL+h7W4DKzzh+qcIf7t0zqY9idEFZn/oU5gSXsbcQrpQwTz
+IZ6bVZTf6WH81e3aSfIZ4Th9XsBJ6/GZSeaIcy95AhToqOZW37kA1WaVjRysCP9W
+ZWeagUpyQMmc6au1YboR9JmJVlRFZmMpeNIOWjciwZW5YIBATSweYMroBK4It1FQ
+5sUBDEfs5m8KcRC9/io3gQFLajyZ7UfgK2sffavWYz/yS+wI3xM5XhAJX9hdG3HF
+DQFyGFIMPEI7/19rsH7XHiRuVhqOcCWaQDtz8HuKaIb37pP05A9VhRZa6VteTPOr
+lyDLz5v0ldl8C+0ykR1RJ/iq/zGpBvvWhiX6daro3u5o37CyoIt6kwjDQ7ANvBxO
+BbCuW5hb567G3VdWcl2gcWryQ0bZnVtZ4okZ++q2B7c3xoQfjw6SOwouI+Ib/cCr
+ZhqaHRWaDAlbciaceGGZB0Cutz/3AboOl/Kf3AXlsmCANjWk1rkhu0FeU4QNLOqm
+gU5ghmUvs+Nukm/c2dyidY+ZqupuQ2o/BxmF3IztFnepC6xfUNm8luWgUoB65kCC
+938QQrPBeU11QTUqKNV/wOG6AGSqOlPqtOqA6q8JQ6GsxzneFv4yojgJpF1CbBrA
+2uqeZtE9GyhNuIujZDqZ
+=ZpRQ
+-----END PGP SIGNATURE-----
